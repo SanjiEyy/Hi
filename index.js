@@ -1,14 +1,16 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const moment = require('moment-timezone');
 
 const app = express();
 const PORT = 3000;
 const greetingsFilePath = path.join(__dirname, 'greetings.txt');
 
-// Function to get a random greeting based on the time of day
+// Function to get a random greeting based on the time of day in Manila timezone
 function getGreetingBasedOnTime() {
-    const currentHour = new Date().getHours();
+    // Get current time in Manila timezone
+    const currentHour = moment().tz('Asia/Manila').hour();
     const greetings = fs.readFileSync(greetingsFilePath, 'utf-8').split('\n').filter(Boolean);
 
     let session = '';
